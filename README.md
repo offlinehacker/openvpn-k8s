@@ -154,6 +154,15 @@ Sensible values for the env vars when on Google Container Engine are:
 
  - **OVPN_K8S_SERVICE_NETWORK**:
 
+    Get this by looking at the ips of your services.
+
+        kubectl get services -o=template --template='{{ range $index, $element := .items }}{{ $element.spec.clusterIP }}
+        {{end}}'
+    
+ - **OVPN_K8S_SERVICE_SUBNET**:
+
+ - **OVPN_K8S_POD_NETWORK**:
+
     Get this by looking at the IPs of your running pods.
 
         $kubectl get pods -o=template --template='{{range $index, $element := .items}}  {{$element.status.podIP}} {{$element.metadata.name}}
@@ -167,7 +176,7 @@ Sensible values for the env vars when on Google Container Engine are:
 
     you would use 10.84.0.0
 
- - **OVPN_K8S_SERVICE_SUBNET**:
+ - **OVPN_K8S_POD_SUBNET**
 
     This is based on the ip range wanted from above. In the example above,
     use 255.255.0.0
