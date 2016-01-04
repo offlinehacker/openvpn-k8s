@@ -143,3 +143,50 @@ Below is the complete list of available options that can be used to customize yo
 - **OVPN_K8S_DNS**: Kuberentes cluster dns server (required).
 - **OVPN_K8S_DH**: Openvpn dh.pem file path (default: /etc/openvpn/pki/dh.pem).
 - **OVPN_K8S_CERTS**: Openvpn certs.p12 file path (default: /etc/openvpn/pki/certs.p12).
+
+## Working on GKE
+
+Sensible values for the env vars when on Google Container Engine are:
+
+ - **OVPN_PROTO**:
+
+    This has to be TCP. `LoadBalancer`s only support TCP [as of kubernetes 1.0](http://kubernetes.io/v1.1/docs/user-guide/services.html).
+
+ - **OVPN_K8S_SERVICE_NETWORK**:
+
+    Get this by looking at the ips of your services.
+
+        kubectl get services -o=template --template='{{ range $index, $element := .items }}{{ $element.spec.clusterIP }}
+        {{end}}'
+
+ - **OVPN_K8S_SERVICE_SUBNET**:
+
+ - **OVPN_K8S_POD_NETWORK**:
+
+    Get this by looking at the IPs of your running pods.
+
+        $kubectl get pods -o=template --template='{{range $index, $element := .items}}  {{$element.status.podIP}} {{$element.metadata.name}}
+        {{end}}'
+
+    This will show you the kind of range you need. eg for this set of pod ips:
+
+        10.84.2.37 podA
+        10.84.0.12 podB
+        10.84.1.4 podC
+
+    you would use 10.84.0.0
+
+ - **OVPN_K8S_POD_SUBNET**
+
+    This is based on the ip range wanted from above. In the example above,
+    use 255.255.0.0
+
+ - **OVPN_K8S_DNS**:
+ - **OVPN_NETWORK**:
+
+    Anything that doesn't clash with the OVPN_K8S_SERVICE_NETWORK.
+
+ - **OVPN_LOG_LEVEL**:
+
+    The log level the container should run at. Defaults to 3. 6 is useful for
+    debugging connection errors.
