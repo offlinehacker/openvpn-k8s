@@ -158,7 +158,7 @@ Sensible values for the env vars when on Google Container Engine are:
 
         kubectl get services -o=template --template='{{ range $index, $element := .items }}{{ $element.spec.clusterIP }}
         {{end}}'
-    
+
  - **OVPN_K8S_SERVICE_SUBNET**:
 
  - **OVPN_K8S_POD_NETWORK**:
@@ -185,3 +185,8 @@ Sensible values for the env vars when on Google Container Engine are:
  - **OVPN_NETWORK**:
 
     Anything that doesn't clash with the OVPN_K8S_SERVICE_NETWORK.
+
+ - **OVPN_LOG_LEVEL**:
+
+    The log level the container should run at. Defaults to 3. 6 is useful for
+    debugging connection errors.
