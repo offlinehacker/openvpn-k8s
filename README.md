@@ -143,3 +143,6 @@ Below is the complete list of available options that can be used to customize yo
 - **OVPN_K8S_DNS**: Kuberentes cluster dns server (required).
 - **OVPN_K8S_DH**: Openvpn dh.pem file path (default: /etc/openvpn/pki/dh.pem).
 - **OVPN_K8S_CERTS**: Openvpn certs.p12 file path (default: /etc/openvpn/pki/certs.p12).
+- **MORE_OPTS**: Misc Openvpn options, one per line, for example `duplicate-cn`
+- **OVPN_K8S_POD_NETWORK**: Kubernetes pod network (optional).
+- **OVPN_K8S_POD_SUBNET**: Kubernetes pod network subnet (optional).
